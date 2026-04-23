@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Search, ShoppingBag, Heart, User, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useState } from "react";
 
 const segments = [
@@ -59,6 +60,7 @@ export const Header = () => {
 
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" aria-label="Search"><Search className="size-5" /></Button>
+          <ThemeToggle />
           <Button variant="ghost" size="icon" aria-label="Account" className="hidden sm:inline-flex"><User className="size-5" /></Button>
           <Button variant="ghost" size="icon" aria-label="Wishlist" className="hidden sm:inline-flex"><Heart className="size-5" /></Button>
           <Button variant="ghost" size="icon" aria-label="Cart" onClick={() => setOpen(true)} className="relative">
