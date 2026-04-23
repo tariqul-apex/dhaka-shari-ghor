@@ -7,7 +7,9 @@ export const Footer = () => (
   <footer className="mt-24 bg-foreground text-background">
     <div className="container py-16 grid gap-12 md:grid-cols-4">
       <div className="md:col-span-2 space-y-4">
-        <div className="font-display font-black text-3xl">bloom<span className="text-primary">.</span></div>
+        <div className="font-display font-black text-3xl">Dhaka Shari Ghor
+          {/* <span className="text-primary">.</span> */}
+          </div>
         <p className="text-background/70 max-w-sm">
           Color-forward, joyfully made clothing for women, men and kids. Designed in our studio, made by people we know.
         </p>
@@ -32,16 +34,16 @@ export const Footer = () => (
       <div>
         <h4 className="font-display text-lg mb-4">Help</h4>
         <ul className="space-y-2 text-background/70 text-sm">
-          <li><a href="#" className="hover:text-primary">Shipping</a></li>
-          <li><a href="#" className="hover:text-primary">Returns</a></li>
-          <li><a href="#" className="hover:text-primary">Size guide</a></li>
-          <li><a href="#" className="hover:text-primary">Contact</a></li>
+          <li><Link to="/policy/shipping" className="hover:text-primary">Shipping policy</Link></li>
+          <li><Link to="/policy/returns" className="hover:text-primary">Returns & exchanges</Link></li>
+          <li><Link to="/policy/privacy" className="hover:text-primary">Privacy policy</Link></li>
+          <li><Link to="/policy/terms" className="hover:text-primary">Terms of service</Link></li>
         </ul>
       </div>
     </div>
     <div className="border-t border-background/10">
       <div className="container py-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-background/60">
-        <p>© 2026 Bloom. Designed with color in mind.</p>
+        <p>© 2026 Dhaka Shari Ghor. All rights reserved.</p>
         <div className="flex gap-2">
           <Button variant="ghost" size="icon" className="hover:bg-background/10" aria-label="Instagram"><Instagram className="size-4" /></Button>
           <Button variant="ghost" size="icon" className="hover:bg-background/10" aria-label="Twitter"><Twitter className="size-4" /></Button>

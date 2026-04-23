@@ -14,10 +14,7 @@ const Index = () => {
   return (
     <div>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 gradient-hero opacity-90" />
-        <div className="absolute -top-24 -left-24 size-96 rounded-full bg-secondary/40 blur-3xl animate-float" />
-        <div className="absolute -bottom-32 -right-24 size-96 rounded-full bg-primary/40 blur-3xl animate-float" style={{ animationDelay: "1.5s" }} />
+      <section className="relative overflow-hidden border-b border-border">
 
         <div className="container relative pt-12 pb-20 md:pt-20 md:pb-32 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-7 animate-fade-up">
@@ -131,18 +128,18 @@ const Index = () => {
       {/* LOOKBOOK STRIP */}
       <section className="py-20">
         <div className="container">
-          <div className="rounded-[2.5rem] overflow-hidden gradient-mint p-10 md:p-16 grid md:grid-cols-2 gap-10 items-center shadow-pop">
-            <div className="space-y-5 text-foreground">
-              <span className="inline-block bg-foreground text-background text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+          <div className="rounded-[2rem] overflow-hidden bg-foreground p-10 md:p-16 grid md:grid-cols-2 gap-10 items-center">
+            <div className="space-y-5 text-background">
+              <span className="inline-block border border-background/30 text-background text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
                 Lookbook
               </span>
               <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.95]">
                 A year of <span className="italic">color</span>, no apologies.
               </h2>
-              <p className="text-foreground/80 text-lg max-w-md">
+              <p className="text-background/70 text-lg max-w-md">
                 Our spring story: 24 looks built around four hero hues — coral, mustard, terracotta and teal.
               </p>
-              <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90">
+              <Button asChild size="lg" className="bg-background text-foreground hover:bg-background/90">
                 <Link to="/shop">See the lookbook</Link>
               </Button>
             </div>
@@ -163,7 +160,7 @@ const Index = () => {
             { icon: Heart, title: "Made in small batches", body: "By people we know, paid fairly." },
           ].map(({ icon: Icon, title, body }) => (
             <div key={title} className="p-8 rounded-3xl bg-muted/50 hover:bg-muted transition-colors">
-              <div className="size-12 rounded-2xl gradient-coral grid place-items-center text-primary-foreground mb-4">
+              <div className="size-12 rounded-xl bg-foreground grid place-items-center text-background mb-4">
                 <Icon className="size-5" />
               </div>
               <h3 className="font-display font-bold text-xl mb-1">{title}</h3>
