@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
+import { fmt, FREE_SHIPPING_THRESHOLD, SHIPPING_STANDARD } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Package, Mail, ArrowRight } from "lucide-react";
 
 const OrderConfirmed = () => {
   const { items, subtotal } = useCart();
   const orderNumber = `BLM-${Date.now().toString().slice(-6)}`;
-  const shipping = subtotal > 80 || subtotal === 0 ? 0 : 8;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_STANDARD;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,19 +48,19 @@ const OrderConfirmed = () => {
                   <p className="text-sm font-medium truncate">{it.product.name}</p>
                   <p className="text-xs text-muted-foreground">{it.color} · {it.size} · Qty {it.quantity}</p>
                 </div>
-                <p className="text-sm font-semibold">${it.product.price * it.quantity}</p>
+                <p className="text-sm font-semibold">{fmt(it.product.price * it.quantity)}</p>
               </div>
             ))}
           </div>
           <div className="border-t border-border mt-4 pt-4 text-sm space-y-1">
             <div className="flex justify-between text-muted-foreground">
-              <span>Subtotal</span><span>${subtotal}</span>
+              <span>Subtotal</span><span>{fmt(subtotal)}</span>
             </div>
             <div className="flex justify-between text-muted-foreground">
-              <span>Shipping</span><span>{shipping === 0 ? "Free" : `$${shipping}`}</span>
+              <span>Shipping</span><span>{shipping === 0 ? "Free" : fmt(shipping)}</span>
             </div>
             <div className="flex justify-between font-display text-base pt-1 border-t border-border">
-              <span>Total</span><span>${subtotal + shipping}</span>
+              <span>Total</span><span>{fmt(subtotal + shipping)}</span>
             </div>
           </div>
         </div>

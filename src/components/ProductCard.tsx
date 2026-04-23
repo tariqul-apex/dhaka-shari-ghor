@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Product } from "@/data/products";
+import { fmt } from "@/lib/currency";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useWishlist } from "@/contexts/WishlistContext";
@@ -62,9 +63,9 @@ export const ProductCard = ({ product }: { product: Product }) => {
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="font-display font-semibold">${product.price}</div>
+              <div className="font-display font-semibold">{fmt(product.price)}</div>
               {product.compareAt && (
-                <div className="text-xs text-muted-foreground line-through">${product.compareAt}</div>
+                <div className="text-xs text-muted-foreground line-through">{fmt(product.compareAt)}</div>
               )}
             </div>
           </div>

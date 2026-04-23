@@ -6,6 +6,7 @@ import { useWishlist } from "@/contexts/WishlistContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useState, useRef, useEffect } from "react";
 import { products } from "@/data/products";
+import { fmt } from "@/lib/currency";
 
 const segments = [
   { label: "Women", to: "/women" },
@@ -53,20 +54,19 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-lg border-b border-border">
       {/* announcement bar */}
-      
-      {/* <div className="bg-foreground text-background text-xs sm:text-sm py-2 overflow-hidden">
+      <div className="bg-foreground text-background text-xs sm:text-sm py-2 overflow-hidden">
         <div className="flex animate-marquee whitespace-nowrap">
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex shrink-0 gap-12 px-6">
-              <span>✨ Free shipping over $80</span>
+              <span>✨ Free shipping over ৳8,000</span>
               <span>🎉 New Spring drop is live</span>
               <span>↩️ Free 30-day returns</span>
-              <span>🌍 Shipping worldwide</span>
+              <span>🌍 Shipping nationwide</span>
               <span>💌 Sign up for 10% off</span>
             </div>
           ))}
         </div>
-      </div> */}
+      </div>
 
       <div className="container flex items-center justify-between h-16 md:h-20 gap-4">
         <button className="md:hidden p-2" onClick={() => setMobileOpen((v) => !v)} aria-label="Menu">
@@ -161,7 +161,7 @@ export const Header = () => {
                       <p className="text-sm font-medium">{p.name}</p>
                       <p className="text-xs text-muted-foreground capitalize">{p.segment} · {p.category}</p>
                     </div>
-                    <span className="ml-auto text-sm font-semibold">${p.price}</span>
+                    <span className="ml-auto text-sm font-semibold">{fmt(p.price)}</span>
                   </button>
                 ))}
                 <button

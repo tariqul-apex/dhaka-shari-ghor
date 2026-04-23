@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { products, segmentMeta, Segment, ageRanges, AgeRange } from "@/data/products";
+import { fmt } from "@/lib/currency";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal, X, ChevronDown, ChevronUp } from "lucide-react";
@@ -17,7 +18,7 @@ const Shop = () => {
   const [sort, setSort] = useState<string>("Featured");
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 300]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 30000]);
   const [selectedAgeRanges, setSelectedAgeRanges] = useState<AgeRange[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -47,6 +48,7 @@ const Shop = () => {
     if (selectedSizes.length > 0) l = l.filter((p) => selectedSizes.some((s) => p.sizes.includes(s)));
     if (selectedColors.length > 0) l = l.filter((p) => selectedColors.some((c) => p.colors.some((pc) => pc.name === c)));
     l = l.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
+
     if (seg === "kids" && selectedAgeRanges.length > 0) {
       l = l.filter((p) => p.ageRange && selectedAgeRanges.includes(p.ageRange));
     }
@@ -62,7 +64,7 @@ const Shop = () => {
     selectedSizes.length > 0 ||
     selectedColors.length > 0 ||
     priceRange[0] > 0 ||
-    priceRange[1] < 300 ||
+    priceRange[1] < 30000 ||
     selectedAgeRanges.length > 0;
 
   const clearAllFilters = () => {
@@ -168,20 +170,20 @@ const Shop = () => {
       {/* Price range */}
       <div>
         <p className="text-sm font-semibold mb-3 uppercase tracking-wider">
-          Price — <span className="font-normal text-muted-foreground">${priceRange[0]} – ${priceRange[1]}</span>
+          Price — <span className="font-normal text-muted-foreground">{fmt(priceRange[0])} – {fmt(priceRange[1])}</span>
         </p>
         <div className="space-y-2">
           <input
             type="range"
             min={0}
-            max={300}
-            step={10}
+            max={30000}
+            step={500}
             value={priceRange[1]}
             onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
             className="w-full accent-primary"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>$0</span><span>$300</span>
+            <span>৳0</span><span>৳30,000</span>
           </div>
         </div>
       </div>
@@ -217,7 +219,7 @@ const Shop = () => {
             }`}
           >
             <SlidersHorizontal className="size-4" />
-            Filters {hasActiveFilters && `(${[category !== "All", selectedSizes.length > 0, selectedColors.length > 0, priceRange[0] > 0 || priceRange[1] < 300, selectedAgeRanges.length > 0].filter(Boolean).length})`}
+            Filters {hasActiveFilters && `(${[category !== "All", selectedSizes.length > 0, selectedColors.length > 0, priceRange[0] > 0 || priceRange[1] < 30000, selectedAgeRanges.length > 0].filter(Boolean).length})`}
             {filtersOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
           </button>
           <select

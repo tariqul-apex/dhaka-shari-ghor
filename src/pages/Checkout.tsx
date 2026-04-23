@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Lock, CreditCard, Truck, ChevronDown, ChevronUp } from "lucide-react";
+import { fmt, FREE_SHIPPING_THRESHOLD, SHIPPING_STANDARD, SHIPPING_EXPRESS } from "@/lib/currency";
 
 type Step = "contact" | "shipping" | "payment";
 
@@ -85,7 +86,7 @@ const Checkout = () => {
   const [form, setForm] = useState<FormData>(initialForm);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
 
-  const shipping = subtotal > 80 || subtotal === 0 ? 0 : 8;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_STANDARD;
   const total = subtotal + shipping;
   const currentIdx = steps.findIndex((s) => s.id === step);
 
@@ -175,7 +176,7 @@ const Checkout = () => {
                 <span className="bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs">{items.length}</span>
               </span>
               <span className="flex items-center gap-2">
-                <span className="font-display">${total}</span>
+                <span className="font-display">{fmt(total)}</span>
                 {orderSummaryOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
               </span>
             </button>
@@ -192,7 +193,7 @@ const Checkout = () => {
                       <p className="text-sm font-medium leading-snug">{it.product.name}</p>
                       <p className="text-xs text-muted-foreground">{it.color} · {it.size}</p>
                     </div>
-                    <p className="text-sm font-semibold">${it.product.price * it.quantity}</p>
+                    <p className="text-sm font-semibold">{fmt(it.product.price * it.quantity)}</p>
                   </div>
                 ))}
               </div>
@@ -239,8 +240,8 @@ const Checkout = () => {
                     <p className="text-sm font-medium mb-3">Shipping method</p>
                     <div className="space-y-2">
                       {[
-                        { id: "standard", label: "Standard shipping", sub: "3–5 business days", price: subtotal >= 80 ? "Free" : "$8" },
-                        { id: "express", label: "Express shipping", sub: "1–2 business days", price: "$18" },
+                        { id: "standard", label: "Standard shipping", sub: "3–5 business days", price: subtotal >= FREE_SHIPPING_THRESHOLD ? "Free" : fmt(SHIPPING_STANDARD) },
+                        { id: "express", label: "Express shipping", sub: "1–2 business days", price: fmt(SHIPPING_EXPRESS) },
                       ].map((opt) => (
                         <label
                           key={opt.id}
@@ -323,7 +324,7 @@ const Checkout = () => {
                 )}
                 <Button type="submit" variant="hero" size="lg" className="flex-1">
                   {step === "payment" ? (
-                    <span className="flex items-center gap-2"><Lock className="size-4" />Place order — ${total}</span>
+                    <span className="flex items-center gap-2"><Lock className="size-4" />Place order — {fmt(total)}</span>
                   ) : (
                     <span className="flex items-center gap-2">Continue <ChevronRight className="size-4" /></span>
                   )}
@@ -354,20 +355,20 @@ const Checkout = () => {
               <div className="border-t border-border pt-4 space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>${subtotal}</span>
+                  <span>{fmt(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
-                  <span>{shipping === 0 ? "Free" : `$${shipping}`}</span>
+                  <span>{shipping === 0 ? "Free" : fmt(shipping)}</span>
                 </div>
                 <div className="flex justify-between font-display text-lg pt-2 border-t border-border">
                   <span>Total</span>
-                  <span>${total}</span>
+                  <span>{fmt(total)}</span>
                 </div>
               </div>
               <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
                 <Truck className="size-3.5" />
-                {subtotal >= 80 ? "You qualify for free shipping!" : `Add $${80 - subtotal} more for free shipping`}
+                {subtotal >= FREE_SHIPPING_THRESHOLD ? "You qualify for free shipping!" : `Add ${fmt(FREE_SHIPPING_THRESHOLD - subtotal)} more for free shipping`}
               </div>
             </div>
           </div>

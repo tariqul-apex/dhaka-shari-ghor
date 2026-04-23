@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Product, getStockForVariant } from "@/data/products";
+import { fmt } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
@@ -64,11 +65,11 @@ export const QuickViewModal = ({ product, open, onClose }: Props) => {
             </div>
 
             <div className="flex items-baseline gap-2">
-              <span className="font-display text-2xl">${product.price}</span>
+              <span className="font-display text-2xl">{fmt(product.price)}</span>
               {product.compareAt && (
                 <>
-                  <span className="text-muted-foreground line-through text-sm">${product.compareAt}</span>
-                  <span className="text-primary font-semibold text-xs">Save ${product.compareAt - product.price}</span>
+                  <span className="text-muted-foreground line-through text-sm">{fmt(product.compareAt)}</span>
+                  <span className="text-primary font-semibold text-xs">Save {fmt(product.compareAt - product.price)}</span>
                 </>
               )}
             </div>

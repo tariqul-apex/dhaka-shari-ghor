@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { getProduct, products, getStockForVariant } from "@/data/products";
+import { fmt, FREE_SHIPPING_THRESHOLD, SHIPPING_STANDARD, SHIPPING_EXPRESS } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Heart, Truck, Recycle, ShieldCheck, ChevronDown, Star, Share2, BadgeCheck } from "lucide-react";
@@ -206,12 +207,12 @@ const ProductDetail = () => {
           )}
 
           <div className="flex items-baseline gap-3">
-            <span className="font-display text-3xl">${product.price}</span>
+            <span className="font-display text-3xl">{fmt(product.price)}</span>
             {product.compareAt && (
               <>
-                <span className="text-muted-foreground line-through">${product.compareAt}</span>
+                <span className="text-muted-foreground line-through">{fmt(product.compareAt)}</span>
                 <span className="text-primary font-semibold text-sm">
-                  Save ${product.compareAt - product.price}
+                  Save {fmt(product.compareAt - product.price)}
                 </span>
               </>
             )}
@@ -282,7 +283,7 @@ const ProductDetail = () => {
 
           <div className="flex gap-3 pt-2">
             <Button variant="hero" size="lg" className="flex-1" onClick={handleAdd}>
-              {size ? `Add to bag — $${product.price}` : "Select size"}
+              {size ? `Add to bag — ${fmt(product.price)}` : "Select size"}
             </Button>
             <Button
               variant="outline"
@@ -299,7 +300,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-xs text-muted-foreground pt-2">
-            <div className="flex flex-col items-center text-center gap-1.5"><Truck className="size-4" />Free over $80</div>
+            <div className="flex flex-col items-center text-center gap-1.5"><Truck className="size-4" />Free over ৳8,000</div>
             <div className="flex flex-col items-center text-center gap-1.5"><Recycle className="size-4" />30-day returns</div>
             <div className="flex flex-col items-center text-center gap-1.5"><ShieldCheck className="size-4" />Secure checkout</div>
           </div>
@@ -309,7 +310,7 @@ const ProductDetail = () => {
             {[
               { id: "details", title: "Details & fabric", body: `${product.fabric}. ${product.description}` },
               { id: "care", title: "Care instructions", body: product.care },
-              { id: "ship", title: "Shipping & returns", body: "Standard 3–5 business days. Free over $80. Express (1–2 days) $18. 30-day free returns on unworn items with tags attached." },
+              { id: "ship", title: "Shipping & returns", body: `Standard 3–5 business days. Free over ${fmt(FREE_SHIPPING_THRESHOLD)}. Express (1–2 days) ${fmt(SHIPPING_EXPRESS)}. 30-day free returns on unworn items with tags attached.` },
             ].map((item) => (
               <div key={item.id} className="border-b border-border">
                 <button

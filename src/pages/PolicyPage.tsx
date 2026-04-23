@@ -13,7 +13,7 @@ const policies: Record<PolicyKey, { title: string; sections: { heading: string; 
       },
       {
         heading: "Shipping rates",
-        body: "Standard shipping (3–5 business days) is free on all orders over $80. Orders under $80 incur a flat shipping fee of $8. Express shipping (1–2 business days) is available for $18.",
+        body: "Standard shipping (3–5 business days) is free on all orders over ৳8,000. Orders under ৳8,000 incur a flat shipping fee of ৳800. Express shipping (1–2 business days) is available for ৳1,800.",
       },
       {
         heading: "International shipping",

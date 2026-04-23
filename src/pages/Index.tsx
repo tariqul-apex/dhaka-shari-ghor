@@ -155,7 +155,7 @@ const Index = () => {
       <section className="container py-16">
         <div className="grid sm:grid-cols-3 gap-6">
           {[
-            { icon: Truck, title: "Free shipping over $80", body: "Anywhere in the continental US." },
+            { icon: Truck, title: "Free shipping over ৳8,000", body: "Nationwide delivery, no minimum fuss." },
             { icon: Recycle, title: "30-day easy returns", body: "Don't love it? Send it back, on us." },
             { icon: Heart, title: "Made in small batches", body: "By people we know, paid fairly." },
           ].map(({ icon: Icon, title, body }) => (

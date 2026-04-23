@@ -5,8 +5,7 @@ import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, X, ShoppingBag, Tag, Truck } from "lucide-react";
 import { toast } from "sonner";
-
-const FREE_SHIPPING_THRESHOLD = 80;
+import { fmt, FREE_SHIPPING_THRESHOLD, SHIPPING_STANDARD } from "@/lib/currency";
 
 const PROMO_CODES: Record<string, number> = {
   BLOOM10: 10,
@@ -19,11 +18,10 @@ export const CartDrawer = () => {
   const [promoInput, setPromoInput] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<{ code: string; discount: number } | null>(null);
 
-  const shippingThreshold = FREE_SHIPPING_THRESHOLD;
-  const progressPct = Math.min((subtotal / shippingThreshold) * 100, 100);
-  const remaining = Math.max(shippingThreshold - subtotal, 0);
+  const progressPct = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
+  const remaining = Math.max(FREE_SHIPPING_THRESHOLD - subtotal, 0);
 
-  const shipping = subtotal >= shippingThreshold || subtotal === 0 ? 0 : 8;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_STANDARD;
   const discount = appliedPromo ? Math.floor((subtotal * appliedPromo.discount) / 100) : 0;
   const total = subtotal + shipping - discount;
 
@@ -68,7 +66,7 @@ export const CartDrawer = () => {
                 {remaining === 0 ? (
                   <span className="text-primary">You've unlocked free shipping! 🎉</span>
                 ) : (
-                  <span>Add <span className="text-primary font-bold">${remaining}</span> more for free shipping</span>
+                  <span>Add <span className="text-primary font-bold">{fmt(remaining)}</span> more for free shipping</span>
                 )}
               </div>
               <div className="h-1.5 rounded-full bg-muted overflow-hidden">
@@ -109,7 +107,7 @@ export const CartDrawer = () => {
                           <Plus className="size-3" />
                         </button>
                       </div>
-                      <div className="font-semibold">${it.product.price * it.quantity}</div>
+                      <div className="font-semibold">{fmt(it.product.price * it.quantity)}</div>
                     </div>
                   </div>
                 </div>
@@ -147,21 +145,21 @@ export const CartDrawer = () => {
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-medium">${subtotal}</span>
+                  <span className="font-medium">{fmt(subtotal)}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-sm text-primary">
                     <span>Discount ({appliedPromo?.discount}%)</span>
-                    <span>−${discount}</span>
+                    <span>−{fmt(discount)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping</span>
-                  <span className="font-medium">{shipping === 0 ? "Free" : `$${shipping}`}</span>
+                  <span className="font-medium">{shipping === 0 ? "Free" : fmt(shipping)}</span>
                 </div>
                 <div className="flex justify-between font-display text-lg pt-2 border-t border-border">
                   <span>Total</span>
-                  <span>${total}</span>
+                  <span>{fmt(total)}</span>
                 </div>
               </div>
 
